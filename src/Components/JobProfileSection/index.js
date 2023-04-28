@@ -121,11 +121,20 @@ class JobProfileSection extends Component {
     this.setState({salaryRange: salary}, this.getJobDetails)
   }
 
-  changeEmploymentType = type => {
-    this.setState(
-      prev => ({employmentType: [...prev.employmentType, type]}),
-      this.getJobDetails,
-    )
+  changeEmploymentType = event => {
+    const {employmentType} = this.state
+    const inputNotInList = employmentType.filter(eachItem => eachItem === event)
+    if (inputNotInList.length === 0) {
+      this.setState(
+        prevState => ({
+          employmentType: [...prevState.employmentType, event],
+        }),
+        this.getJobDetails,
+      )
+    } else {
+      const filteredData = employmentType.filter(eachItem => eachItem !== event)
+      this.setState({employmentType: filteredData}, this.getJobDetails)
+    }
   }
 
   renderJobDetails = () => {
